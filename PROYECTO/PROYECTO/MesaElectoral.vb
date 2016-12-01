@@ -24,6 +24,17 @@
 
     Private _listaVotantes As ArrayList
     Private _vocales As ArrayList
+
+    Sub New()
+        Me._administrador = Admin
+        Me._ubicacion = "Desconocido"
+        Me._listaVotantes = New ArrayList()
+        Me._vocales = New ArrayList()
+        Me._candidatos = New ArrayList()
+
+    End Sub
+
+
     Sub New(ByVal admin As Administrador, ByVal ubi As String)
         Me._administrador = admin
         Me._ubicacion = ubi

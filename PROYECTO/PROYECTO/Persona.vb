@@ -30,4 +30,14 @@
         End Set
     End Property
 
+    Private _edad As Byte
+    Public Property edad() As Byte
+        Get
+            Return _edad
+        End Get
+        Set(ByVal value As Byte)
+            _edad = value
+        End Set
+    End Property
+
 End Class
