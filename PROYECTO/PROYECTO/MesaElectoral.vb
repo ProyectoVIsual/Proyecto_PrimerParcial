@@ -1,4 +1,5 @@
 ﻿Public Class MesaElectoral
+    Inherits RecintoElectoral
 
     Private _administrador As Administrador
     Public Property Admin() As Administrador
@@ -26,6 +27,8 @@
     Private _vocales As ArrayList
 
     Sub New()
+        Me.ciudad = "Desconocido"
+        Me.direccion = "Desconocido"
         Me._administrador = Admin
         Me._ubicacion = "Desconocido"
         Me._listaVotantes = New ArrayList()
@@ -35,7 +38,9 @@
     End Sub
 
 
-    Sub New(ByVal admin As Administrador, ByVal ubi As String)
+    Sub New(ByVal ciudad As String, ByVal direccion As String, ByVal admin As Administrador, ByVal ubi As String)
+        Me.ciudad = ciudad
+        Me.direccion = direccion
         Me._administrador = admin
         Me._ubicacion = ubi
         Me._listaVotantes = New ArrayList()

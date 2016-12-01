@@ -88,6 +88,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Persona.vb" />
+    <Compile Include="RecintoElectoral.vb" />
     <Compile Include="Votante.vb" />
   </ItemGroup>
   <ItemGroup>

@@ -10,11 +10,11 @@
     End Sub
 
 
-    Sub New(ByVal nombre As String, ByVal apellido As String, ByVal cedula As String, ByVal edad As Byte)
+    Sub New(ByVal nombre As String, ByVal apellido As String, ByVal cedula As String, ByVal edadPersona As Byte)
         Me.Nombre = nombre
         Me.Apellido = apellido
         Me.Cedula = cedula
-        Me.edad = edad
+        Me.edad = edadPersona
 
     End Sub
 

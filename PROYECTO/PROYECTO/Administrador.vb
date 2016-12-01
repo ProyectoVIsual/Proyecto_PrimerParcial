@@ -30,11 +30,11 @@
         Me.Password_ADMIN = "Desconocido"
     End Sub
 
-    Sub New(ByVal nombre As String, ByVal apellido As String, ByVal cedula As String, ByVal edad As Byte, ByVal user As String, ByVal pass As String)
+    Sub New(ByVal nombre As String, ByVal apellido As String, ByVal cedula As String, ByVal edadPersona As Byte, ByVal user As String, ByVal pass As String)
         Me.Nombre = nombre
         Me.Apellido = apellido
         Me.Cedula = cedula
-        Me.edad = edad
+        Me.edad = edadPersona
         Me.usuarioAdministrador = user
         Me.Password_ADMIN = pass
     End Sub

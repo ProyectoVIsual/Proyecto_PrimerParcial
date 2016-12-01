@@ -30,13 +30,13 @@
         End Set
     End Property
 
-    Private _edad As Byte
+    Private edadPersona As Byte
     Public Property edad() As Byte
         Get
-            Return _edad
+            Return edadPersona
         End Get
         Set(ByVal value As Byte)
-            _edad = value
+            edadPersona = value
         End Set
     End Property
 
