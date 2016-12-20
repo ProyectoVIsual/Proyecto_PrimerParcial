@@ -522,6 +522,7 @@
                     cedula = Console.ReadLine()
                     Console.WriteLine("Ingrese su numero de lista")
                     lista = Console.ReadLine()
+                    Console.WriteLine("Los Datos Del Candidato Han Sido Ingresados Correctamente")
                 Case OpCandidatoResultados.Out
                     Console.WriteLine("Regresar al Menu Principal")
                 Case Else
@@ -567,6 +568,7 @@
                 Case OpAdminDeleteCandidato.Cedula
                     Console.WriteLine("Ingrese su Cedula")
                     cedula = Console.ReadLine()
+                    Console.WriteLine("Su Candidato Ha Sido Eliminado")
                 Case OpCandidatoResultados.Out
                     Console.WriteLine("Regresar al Menu Principal")
                 Case Else
