@@ -1,5 +1,5 @@
 ﻿Module Module1
-
+    Dim SESSION As New InicioSession
     Enum OpMain
         Invalid
         Vote
@@ -78,6 +78,7 @@
     End Enum
 
     Sub Main()
+
         Dim op As String = ""
         Dim opcion As Byte
 
@@ -147,7 +148,12 @@
                 Case LoginVotante.Cedula
                     Console.WriteLine("Ingrese su numero de cedula")
                     cedu = Console.ReadLine()
-                    manejarVotante()
+                    If SESSION.InicioSessionvOTANTE(cedu) = "EXITO" Then
+                        manejarVotante()
+                    Else
+                        Console.WriteLine("credenciales no validas")
+                    End If
+
                 Case LoginVotante.Out
                     Console.WriteLine("Vuelve al Menu Principal")
                 Case Else
@@ -191,18 +197,23 @@
                 Case OpVotante.Candidate1
                     Console.WriteLine("Candidato 1")
                     Console.WriteLine("Muchas Gracias su Voto Ha Sido Regristado Exitosamente")
+                    opcion = OpVotante.Out
                 Case OpVotante.Candidate2
                     Console.WriteLine("Candidato 2")
                     Console.WriteLine("Muchas Gracias su Voto Ha Sido Regristado Exitosamente")
+                    opcion = OpVotante.Out
                 Case OpVotante.Candidate3
                     Console.WriteLine("Candidato 3")
                     Console.WriteLine("Muchas Gracias su Voto Ha Sido Regristado Exitosamente")
+                    opcion = OpVotante.Out
                 Case OpVotante.Candidate4
                     Console.WriteLine("Candidato 4")
                     Console.WriteLine("Muchas Gracias su Voto Ha Sido Regristado Exitosamente")
+                    opcion = OpVotante.Out
                 Case OpVotante.Candidate5
                     Console.WriteLine("Candidato 5")
                     Console.WriteLine("Muchas Gracias su Voto Ha Sido Regristado Exitosamente")
+                    opcion = OpVotante.Out
                 Case OpVotante.Out
                     Console.WriteLine("Regresar al Menú Principal")
                 Case Else
@@ -230,8 +241,8 @@
 
         Dim op As String = ""
         Dim opcion As Byte
-        Dim user As String
-        Dim pass As String
+        Dim user As String = ""
+        Dim pass As String = ""
 
         Do
             MenuLoginCandidato()
@@ -246,7 +257,17 @@
                     user = Console.ReadLine()
                     Console.WriteLine("Ingrese su contraseña")
                     pass = Console.ReadLine()
-                    manejarCandidato()
+                    If SESSION.InicioSessionCandidato(user, pass) = "EXITO" Then
+                        manejarCandidato()
+                        'Console.WriteLine("EXITO...")
+                        'Console.ReadLine()
+                        opcion = LoginCandidato.User
+                    Else
+                        Console.WriteLine("CREDENCIALES NO VALIDAS")
+                    End If
+
+
+
                 Case Else
                     Console.WriteLine("xxx Opcion Invalidad xxx")
             End Select
@@ -416,7 +437,12 @@
                     user = Console.ReadLine()
                     Console.WriteLine("Ingrese su contraseña")
                     pass = Console.ReadLine()
-                    manejarAdministrador()
+                    If SESSION.InicioSessionAdmin(user, pass) = "EXITO" Then
+                        manejarAdministrador()
+                    Else
+                        Console.WriteLine("CREDENCIALES NO VALIDAS")
+                    End If
+
                 Case Else
                     Console.WriteLine("xxx Opcion Invalidad xxx")
             End Select
