@@ -3,13 +3,13 @@ Imports MySql.Data
 Imports System.Data.SqlClient
 
 Public Class InicioSession
-    Dim conex As New SqlConnection("data source=localhost; user id=root; password=''; database=voto2016")
+    Dim conex As New MySqlConnection("data source=localhost; user id=root; password=''; database=voto2016")
     '("data source=localhost;user id=root; password=''; database=animales")
-    Dim da As SqlDataAdapter
+    Dim da As MySqlDataAdapter
     Dim ds As New DataSet
     Dim sql, neensaje As String
     Dim sw As Boolean
-    Dim comando As SqlCommand
+    Dim comando As MySqlCommand
     Sub New()
 
     End Sub
@@ -23,7 +23,7 @@ Public Class InicioSession
             conex.Open()
 
 
-            da = New SqlDataAdapter(sql, conex)
+            da = New MySqlDataAdapter(sql, conex)
             ds.Clear()
             da.Fill(ds, "candidato")
             If (ds.Tables("candidato").Rows.Count() <> 0) Then
@@ -60,7 +60,7 @@ Public Class InicioSession
             conex.Open()
 
 
-            da = New SqlDataAdapter(sql, conex)
+            da = New MySqlDataAdapter(sql, conex)
             ds.Clear()
             da.Fill(ds, "admin")
             If (ds.Tables("admin").Rows.Count() <> 0) Then
@@ -96,7 +96,7 @@ Public Class InicioSession
             conex.Open()
 
 
-            da = New SqlDataAdapter(sql, conex)
+            da = New MySqlDataAdapter(sql, conex)
             ds.Clear()
             da.Fill(ds, "votante")
             If (ds.Tables("votante").Rows.Count() <> 0) Then
