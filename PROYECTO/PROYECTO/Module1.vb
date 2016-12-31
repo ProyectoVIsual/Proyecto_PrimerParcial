@@ -1,7 +1,4 @@
-﻿
-Imports MySql.Data.MySqlClient
-Imports MySql.Data
-Module Module1
+﻿Module Module1
     Dim SESSION As New InicioSession
     Enum OpMain
         Invalid
@@ -309,13 +306,13 @@ Module Module1
             Console.WriteLine("Ud a ingresado: {0}", op)
 
             Select Case opcion
-                Case OpCandidato.Resultados
+                Case OpCandidato.resultados
                     Console.WriteLine("Resultados")
                     manejarCandidatoResultados()
-                Case OpCandidato.ListarCandidatos
+                Case OpCandidato.listarCandidatos
                     Console.WriteLine("Listar Candidatos")
                     manejarCandidatoListas()
-                Case OpCandidato.Out
+                Case OpCandidato.out
                     Console.WriteLine("Cerrar Sesión")
                 Case Else
                     Console.WriteLine("xxx Opcion Invalidad xxx")
@@ -327,9 +324,9 @@ Module Module1
 
     Sub MenuCandidato()
 
-        Console.WriteLine("{0}. Resultados", CInt(OpCandidato.Resultados))
-        Console.WriteLine("{0}. Listar Candidatos", CInt(OpCandidato.ListarCandidatos))
-        Console.WriteLine("{0}. Cerrar Sesión", CInt(OpCandidato.Out))
+        Console.WriteLine("{0}. Resultados", CInt(OpCandidato.resultados))
+        Console.WriteLine("{0}. Listar Candidatos", CInt(OpCandidato.listarCandidatos))
+        Console.WriteLine("{0}. Cerrar Sesión", CInt(OpCandidato.out))
 
     End Sub
 
@@ -358,22 +355,22 @@ Module Module1
             Console.WriteLine("Ud a ingresado: {0}", op)
 
             Select Case opcion
-                Case OpCandidatoResultados.Cresultados
+                Case OpCandidatoResultados.cresultados
                     Console.WriteLine("Estos son los Resultados")
-                Case OpCandidatoResultados.Out
+                Case OpCandidatoResultados.out
                     Console.WriteLine("Regresar al Menu Principal")
                 Case Else
                     Console.WriteLine("xxx Opcion Invalidad xxx")
             End Select
 
-        Loop Until opcion = OpCandidatoResultados.Out
+        Loop Until opcion = OpCandidatoResultados.out
 
     End Sub
 
     Sub MenuCandidatoResultados()
 
-        Console.WriteLine("Estos son los Resultados", CInt(OpCandidatoResultados.Cresultados))
-        Console.WriteLine("{0}. Cerrar Sesión", CInt(OpCandidatoResultados.Out))
+        Console.WriteLine("Estos son los Resultados", CInt(OpCandidatoResultados.cresultados))
+        Console.WriteLine("{0}. Cerrar Sesión", CInt(OpCandidatoResultados.out))
 
     End Sub
 
@@ -398,22 +395,22 @@ Module Module1
             Console.WriteLine("Ud a ingresado: {0}", op)
 
             Select Case opcion
-                Case OpCandidatoListas.Lista
+                Case OpCandidatoListas.lista
                     Console.WriteLine("Estos son los Candidatos")
-                Case OpCandidatoListas.Out
+                Case OpCandidatoListas.out
                     Console.WriteLine("Regresar al Menu Principal")
                 Case Else
                     Console.WriteLine("xxx Opcion Invalidad xxx")
             End Select
 
-        Loop Until opcion = OpCandidatoListas.Out
+        Loop Until opcion = OpCandidatoListas.out
 
     End Sub
 
     Sub MenuCandidatoListas()
 
-        Console.WriteLine("Estos son los Candidatos", CInt(OpCandidatoListas.Lista))
-        Console.WriteLine("{0}. Cerrar Sesión", CInt(OpCandidatoListas.Out))
+        Console.WriteLine("Estos son los Candidatos", CInt(OpCandidatoListas.lista))
+        Console.WriteLine("{0}. Cerrar Sesión", CInt(OpCandidatoListas.out))
 
     End Sub
 
@@ -501,7 +498,7 @@ Module Module1
                     Console.WriteLine("xxx Opcion Invalidad xxx")
             End Select
 
-        Loop Until opcion = OpAdministrador.Out
+        Loop Until opcion = OpAdministrador.out
 
     End Sub
 
@@ -516,23 +513,13 @@ Module Module1
     End Sub
 
     Sub manejarAdminAggCandidato()
+
         Dim op As String = ""
         Dim opcion As Byte
         Dim nombre As String
         Dim apellido As String
-        Dim edad As Integer
         Dim cedula As Integer
         Dim lista As Integer
-        Dim dignidad As String
-        Dim usercand As String
-        Dim passcand As String
-
-        Dim conex As New MySqlConnection("data source=localhost; user id=root; password=''; database=voto2016")
-        '("data source=localhost;user id=root; password=''; database=animales")
-        Dim da As MySqlDataAdapter
-        Dim ds As New DataSet
-        Dim sqls, neensaje As String
-        Dim sw As Boolean
 
         Do
             MenuAdminAggCandidato()
@@ -557,43 +544,16 @@ Module Module1
                     nombre = Console.ReadLine()
                     Console.WriteLine("Ingrese su Apellido")
                     apellido = Console.ReadLine()
-                    Console.WriteLine("Ingrese su edad")
-                    edad = Console.ReadLine()
                     Console.WriteLine("Ingrese su numero de cedula")
                     cedula = Console.ReadLine()
                     Console.WriteLine("Ingrese su numero de lista")
                     lista = Console.ReadLine()
-                    Console.WriteLine("Ingrese su dignidad")
-                    dignidad = Console.ReadLine()
-                    Console.WriteLine("Ingrese su usuario")
-                    usercand = Console.ReadLine()
-                    Console.WriteLine("Ingrese su contraseña")
-                    passcand = Console.ReadLine()
                     Console.WriteLine("Los Datos Del Candidato Han Sido Ingresados Correctamente")
-                    Try
-                        sw = False
-                        sqls = "INSERT into candidato(nombre,apellido,edad,user,pass,lista,dignidad, votos,cedula) VALUES ('" & nombre &
-                        "', '" & apellido & "', " & edad & ", '" & usercand & "', '" & passcand & "', '" & lista & "', 
-                '" & dignidad & "', 0, '" & cedula & "')"
-                        conex.Open()
-
-
-                        da = New MySqlDataAdapter(sqls, conex)
-                        ds.Clear()
-                        da.Fill(ds, "candidato")
-
-
-                    Catch ex As Exception
-                        Console.WriteLine("ERROR EXCRPTION CONEXCION")
-                        neensaje = "ERROR"
-                    End Try
-                    conex.Close()
                 Case OpCandidatoResultados.Out
                     Console.WriteLine("Regresar al Menu Principal")
                 Case Else
                     Console.WriteLine("xxx Opcion Invalidad xxx")
             End Select
-
 
         Loop Until opcion = OpCandidatoResultados.Out
 
