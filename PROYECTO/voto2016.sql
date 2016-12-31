@@ -48,22 +48,28 @@ INSERT INTO `admin` (`id`, `nombre`, `user`, `pass`) VALUES
 -- Estructura de tabla para la tabla `candidato`
 --
 
-CREATE TABLE `candidato` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `candidato`;
+CREATE TABLE IF NOT EXISTS `candidato` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(25) NOT NULL,
+  `apellido` varchar(25) NOT NULL,
+  `edad` int(11) NOT NULL,
+  `cedula` int(11) NOT NULL,
   `user` varchar(25) NOT NULL,
   `pass` varchar(25) NOT NULL,
   `lista` varchar(25) NOT NULL,
-  `Votos` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `dignidad` varchar(50) NOT NULL,
+  `Votos` int(11) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `candidato`
 --
-
-INSERT INTO `candidato` (`id`, `nombre`, `user`, `pass`, `lista`, `Votos`) VALUES
-(1, 'fernando', 'fernando', 'fernando123', 'Lista 1', 0),
-(2, 'carlos', 'carlos', 'carlos123', 'Lista 2', NULL);
+INSERT INTO `candidato` (`id`, `nombre`, `user`, `pass`, `lista`, `Votos`, `cedula`, `edad`, `dignidad`, `apellido`) VALUES
+(1, 'fernando', 'fernando', 'fernando123', 'Lista 1', 0, 1220356846, 30, 'presidente', 'ordoñez'),
+(2, 'carlos', 'carlos', 'carlos123', 'Lista 2', 0, 356589356, 35, 'presidente', 'noboa'),
+(3, 'paco', 'pacola20', '123456', '20', 0, 1568854963, 55, 'presidente', 'moncayo');
 
 -- --------------------------------------------------------
 
