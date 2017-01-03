@@ -145,8 +145,17 @@ Module Module1
             MenuLoginVotante()
 
             op = Console.ReadLine()
-            opcion = CByte(op) 'Byte parse()
-            Console.WriteLine("Ud a ingresado: {0}", op)
+            Try
+                opcion = CByte(op)
+            Catch ex As OverflowException
+                opcion = 255
+            Catch ex As Exception
+                opcion = OpMain.Invalid
+
+            End Try
+
+            'opcion = CByte(op) Byte parse()
+           Console.WriteLine("Ud a ingresado: {0}", op)
 
             Select Case opcion
                 Case LoginVotante.Cedula
@@ -237,7 +246,16 @@ Module Module1
             MenuLoginCandidato()
 
             op = Console.ReadLine()
-            opcion = CByte(op) 'Byte parse()
+            Try
+                opcion = CByte(op)
+            Catch ex As OverflowException
+                opcion = 255
+            Catch ex As Exception
+                opcion = OpMain.Invalid
+
+            End Try
+
+
             Console.WriteLine("Ud a ingresado: {0}", op)
 
             Select Case opcion
@@ -421,7 +439,16 @@ Module Module1
             MenuLoginAdministrador()
 
             op = Console.ReadLine()
-            opcion = CByte(op) 'Byte parse()
+            Try
+                opcion = CByte(op)
+            Catch ex As OverflowException
+                opcion = 255
+            Catch ex As Exception
+                opcion = OpMain.Invalid
+
+            End Try
+
+
             Console.WriteLine("Ud a ingresado: {0}", op)
 
             Select Case opcion
