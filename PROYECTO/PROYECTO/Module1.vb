@@ -3,6 +3,7 @@ Imports MySql.Data.MySqlClient
 Imports MySql.Data
 Module Module1
     Dim SESSION As New InicioSession
+    Dim ADMIN_OP As New Op_Administrador
     Enum OpMain
         Invalid
         Vote
@@ -180,7 +181,7 @@ Module Module1
         Dim opcion As Byte
 
         Do
-            MenuVotante()
+            ADMIN_OP.MenuParaVotante()
 
             op = Console.ReadLine()
 
@@ -195,45 +196,30 @@ Module Module1
 
 
             Console.WriteLine("Ud a ingresado: {0}", op)
+            If op.Equals(123) Then
+                opcion = 123
+            Else
+                If ADMIN_OP.Votar(op) Then
+                    Console.WriteLine("Voto con exito")
+                Else
+                    Console.WriteLine("ERROR INGRESE LA OPCCION CORRECTA")
+                End If
+            End If
 
-            Select Case opcion
-                Case OpVotante.Candidate1
-                    Console.WriteLine("Candidato 1")
-                    Console.WriteLine("Muchas Gracias su Voto Ha Sido Regristado Exitosamente")
-                    opcion = OpVotante.Out
-                Case OpVotante.Candidate2
-                    Console.WriteLine("Candidato 2")
-                    Console.WriteLine("Muchas Gracias su Voto Ha Sido Regristado Exitosamente")
-                    opcion = OpVotante.Out
-                Case OpVotante.Candidate3
-                    Console.WriteLine("Candidato 3")
-                    Console.WriteLine("Muchas Gracias su Voto Ha Sido Regristado Exitosamente")
-                    opcion = OpVotante.Out
-                Case OpVotante.Candidate4
-                    Console.WriteLine("Candidato 4")
-                    Console.WriteLine("Muchas Gracias su Voto Ha Sido Regristado Exitosamente")
-                    opcion = OpVotante.Out
-                Case OpVotante.Candidate5
-                    Console.WriteLine("Candidato 5")
-                    Console.WriteLine("Muchas Gracias su Voto Ha Sido Regristado Exitosamente")
-                    opcion = OpVotante.Out
-                Case OpVotante.Out
-                    Console.WriteLine("Regresar al Menú Principal")
-                Case Else
-                    Console.WriteLine("xxx Opcion Invalidad xxx")
-            End Select
 
-        Loop Until opcion = OpVotante.Out
+        Loop Until opcion = 123
 
     End Sub
 
     Sub MenuVotante()
+
 
         Console.WriteLine("{0}. Candidato 1", CInt(OpVotante.Candidate1))
         Console.WriteLine("{0}. Candidato 2", CInt(OpVotante.Candidate2))
         Console.WriteLine("{0}. Candidato 3", CInt(OpVotante.Candidate3))
         Console.WriteLine("{0}. Candidato 4", CInt(OpVotante.Candidate4))
         Console.WriteLine("{0}. Candidato 5", CInt(OpVotante.Candidate5))
+
         Console.WriteLine("{0}. Regresar al Menú Principal", CInt(OpVotante.Out))
 
     End Sub
@@ -360,6 +346,7 @@ Module Module1
             Select Case opcion
                 Case OpCandidatoResultados.Cresultados
                     Console.WriteLine("Estos son los Resultados")
+
                 Case OpCandidatoResultados.Out
                     Console.WriteLine("Regresar al Menu Principal")
                 Case Else
@@ -373,7 +360,9 @@ Module Module1
     Sub MenuCandidatoResultados()
 
         Console.WriteLine("Estos son los Resultados", CInt(OpCandidatoResultados.Cresultados))
-        Console.WriteLine("{0}. Cerrar Sesión", CInt(OpCandidatoResultados.Out))
+        ADMIN_OP.VerResultados()
+        Console.WriteLine("                                ")
+        Console.WriteLine("{0}. regresar", CInt(OpCandidatoResultados.Out))
 
     End Sub
 
@@ -399,7 +388,7 @@ Module Module1
 
             Select Case opcion
                 Case OpCandidatoListas.Lista
-                    Console.WriteLine("Estos son los Candidatos")
+                    ADMIN_OP.ListarCandidatos()
                 Case OpCandidatoListas.Out
                     Console.WriteLine("Regresar al Menu Principal")
                 Case Else
@@ -413,7 +402,8 @@ Module Module1
     Sub MenuCandidatoListas()
 
         Console.WriteLine("Estos son los Candidatos", CInt(OpCandidatoListas.Lista))
-        Console.WriteLine("{0}. Cerrar Sesión", CInt(OpCandidatoListas.Out))
+        ADMIN_OP.ListarCandidatos()
+        Console.WriteLine("{0}. Regresar", CInt(OpCandidatoListas.Out))
 
     End Sub
 
@@ -570,25 +560,13 @@ Module Module1
                     usercand = Console.ReadLine()
                     Console.WriteLine("Ingrese su contraseña")
                     passcand = Console.ReadLine()
-                    Console.WriteLine("Los Datos Del Candidato Han Sido Ingresados Correctamente")
-                    Try
-                        sw = False
-                        sqls = "INSERT into candidato(nombre,apellido,edad,user,pass,lista,dignidad, votos,cedula) VALUES ('" & nombre &
-                        "', '" & apellido & "', " & edad & ", '" & usercand & "', '" & passcand & "', '" & lista & "', 
-                '" & dignidad & "', 0, '" & cedula & "')"
-                        conex.Open()
+                    If ADMIN_OP.AgregarCandidato(nombre, apellido, edad, cedula, lista, dignidad, usercand, passcand) Then
+                        Console.WriteLine("Los Datos Del Candidato Han Sido Ingresados Correctamente")
+                    Else
+                        Console.WriteLine("DATOS NO INGRESADOS  ")
+                    End If
 
 
-                        da = New MySqlDataAdapter(sqls, conex)
-                        ds.Clear()
-                        da.Fill(ds, "candidato")
-
-
-                    Catch ex As Exception
-                        Console.WriteLine("ERROR EXCRPTION CONEXCION")
-                        neensaje = "ERROR"
-                    End Try
-                    conex.Close()
                 Case OpCandidatoResultados.Out
                     Console.WriteLine("Regresar al Menu Principal")
                 Case Else
@@ -635,7 +613,13 @@ Module Module1
                 Case OpAdminDeleteCandidato.Cedula
                     Console.WriteLine("Ingrese su Cedula")
                     cedula = Console.ReadLine()
-                    Console.WriteLine("Su Candidato Ha Sido Eliminado")
+                    If ADMIN_OP.EliminarCandidato(cedula) Then
+                        Console.WriteLine("Su Candidato Ha Sido Eliminado")
+                    Else
+                        Console.WriteLine("ERROR")
+                    End If
+
+
                 Case OpCandidatoResultados.Out
                     Console.WriteLine("Regresar al Menu Principal")
                 Case Else
@@ -678,7 +662,8 @@ Module Module1
 
             Select Case opcion
                 Case OpAdminResulCandidato.AResultados
-                    Console.WriteLine("Estos son los Resultados")
+                    ADMIN_OP.VerResultados()
+                    'Console.WriteLine("Estos son los Resultados")
                 Case OpAdminResulCandidato.Out
                     Console.WriteLine("Regresar al Menu Principal")
                 Case Else
@@ -692,6 +677,7 @@ Module Module1
     Sub MenuAdminResulCandidato()
 
         Console.WriteLine("Estos son los Resultados", CInt(OpAdminResulCandidato.AResultados))
+        ADMIN_OP.VerResultados()
         Console.WriteLine("{0}. Regresar", CInt(OpAdminResulCandidato.Out))
 
     End Sub
@@ -720,7 +706,7 @@ Module Module1
 
             Select Case opcion
                 Case OpAdminListaCandidato.ALista
-                    Console.WriteLine("Estos son los Candidatos")
+                    ADMIN_OP.ListarCandidatos()
                 Case OpAdminListaCandidato.Out
                     Console.WriteLine("Regresar al Menu Principal")
                 Case Else
@@ -734,6 +720,7 @@ Module Module1
     Sub MenuAdminListaCandidato()
 
         Console.WriteLine("Estos son los Candidatos", CInt(OpAdminListaCandidato.ALista))
+        ADMIN_OP.ListarCandidatos()
         Console.WriteLine("{0}. Regresar", CInt(OpAdminListaCandidato.Out))
 
     End Sub
