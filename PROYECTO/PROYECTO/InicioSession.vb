@@ -4,6 +4,7 @@ Imports System.Data.SqlClient
 
 Public Class InicioSession
     Dim conex As New MySqlConnection("data source=localhost; user id=root; password=''; database=voto2016")
+    '"data source=localhost; user id=root; password=''; database=voto2016")
     '("data source=localhost;user id=root; password=''; database=animales")
     Dim da As MySqlDataAdapter
     Dim ds As New DataSet

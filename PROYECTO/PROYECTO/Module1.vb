@@ -210,6 +210,7 @@ Module Module1
             Else
                 If ADMIN_OP.Votar(op) Then
                     Console.WriteLine("Voto con exito")
+                    opcion = 123
                 Else
                     Console.WriteLine("ERROR INGRESE LA OPCCION CORRECTA")
                 End If

@@ -5,10 +5,11 @@ Imports System.Data.SqlTypes
 Public Class Op_Administrador
 
     Dim conex As New MySqlConnection("data source=localhost; user id=root; password=''; database=voto2016")
+    '"data source=www.transespol.gob.ec; user id=transesp_jk; password='[ZLnW)^Z;gK+'; database=transesp_vb")
     '("data source=localhost;user id=root; password=''; database=animales")
     Dim da As MySqlDataAdapter
     Dim ds As New DataSet
-    Dim sql, neensaje As String
+    Dim sql, sqlUPDATE, neensaje As String
     Dim sw As Boolean
     Dim comando As MySqlCommand
     Sub New()
@@ -28,7 +29,7 @@ Public Class Op_Administrador
 
         Catch ex As Exception
             sw = False
-            Console.WriteLine("ERROR EXCRPTION CONEXCION")
+            Console.WriteLine("ERROR DE CONEXCION")
             neensaje = "ERROR"
         End Try
         conex.Close()
@@ -90,8 +91,6 @@ Public Class Op_Administrador
         End Try
         conex.Close()
     End Sub
-
-
     Public Sub VerResultados()
         Try
             sw = False
@@ -146,33 +145,31 @@ Public Class Op_Administrador
         conex.Close()
     End Sub
     Public Function Votar(ByVal id As Integer) As Boolean
-        Dim voto = 0
+        Dim voto As Integer
+        voto = 0
         Try
 
 
             sql = "SELECT * FROM candidato WHERE id=" & id
             conex.Open()
-
-
             da = New MySqlDataAdapter(sql, conex)
             ds.Clear()
             da.Fill(ds, "candidato")
             If (ds.Tables("candidato").Rows.Count() <> 0) Then
                 sw = True
 
-                Console.WriteLine("" & id & " " & ds.Tables("candidato").Rows(0).Item("Votos"))
-                Console.WriteLine("" & ds.Tables("candidato").Rows(0).Item("nombre"))
+                'Console.WriteLine("" & id & " " & ds.Tables("candidato").Rows(0).Item("Votos"))
+                'Console.WriteLine("" & ds.Tables("candidato").Rows(0).Item("nombre"))
 
                 voto = ds.Tables("candidato").Rows(0).Item("Votos")
                 conex.Close()
+                voto = voto + 1
 
-                'sql = "UPDATE  candidato set Votos=" & voto & " WHERE id=" & id
-                'conex.Open()
-                'voto = voto + 1
-                'da = New MySqlDataAdapter(sql, conex)
-                ''Console.WriteLine("  EL VOTO REGISTRO  CON EXITO           ")
-                'ds.Clear()
-                'da.Fill(ds, "candidato")
+                sqlUPDATE = "UPDATE candidato SET Votos= '" & voto & "' WHERE id='" & id & "'"
+                conex.Open()
+                Dim Comand As MySqlCommand = New MySqlCommand(sqlUPDATE, conex)
+                Comand.ExecuteNonQuery()
+
             Else
                 sw = False
                 Console.WriteLine("NO EXISTE ESE CANDIDADTO ")
@@ -180,9 +177,7 @@ Public Class Op_Administrador
 
             End If
 
-        Catch ex As MysqlException
-            Console.WriteLine("ERROR EXCRPTION CONEXCION")
-
+        Catch ex As MySqlException
             sw = False
         End Try
         conex.Close()
